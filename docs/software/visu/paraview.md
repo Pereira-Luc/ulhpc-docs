@@ -37,7 +37,7 @@ To open an ParaView in the interactive mode, please follow the following steps:
 $ ssh -X iris-cluster
 
 # Reserve the node for interactive computation
-$ salloc -p interactive --time=00:30:00 --ntasks 1 -c 4 --x11  # OR si --x11 [...]
+$ salloc --partition=interactive --time=00:30:00 --ntasks=1 --cpus-per-task=4 --x11  # OR si --x11 [...]
 
 # Load the module abinit and needed environment
 $ module purge 
@@ -50,19 +50,19 @@ $ paraview &
 ## Batch mode
 ```shell
 #!/bin/bash -l
-#SBATCH -J ParaView
-###SBATCH -A <project name>
-#SBATCH -N 2
+#SBATCH --job-name=ParaView
+###SBATCH --account=<project name>
+#SBATCH --nodes=2
 #SBATCH --ntasks-per-node=28
 #SBATCH --time=00:30:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 # Load the module Paraview and needed environment
 module purge 
 module load swenv/default-env/latest
 module load vis/ParaView/5.6.2-intel-2019a-mpi
 
-srun -n ${SLURM_NTASKS} pvbatch python-script.py
+srun -ntasks=${SLURM_NTASKS} pvbatch python-script.py
 ```
 
 ## Additional information
