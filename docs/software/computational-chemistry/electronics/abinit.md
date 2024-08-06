@@ -26,7 +26,7 @@ To open an ABINIT in the interactive mode, please follow the following steps:
 $ ssh -X iris-cluster
 
 # Reserve the node for interactive computation
-$ salloc -p interactive --time=00:30:00 --ntasks 1 -c 4 --x11 # OR si --x11 [...]
+$ salloc --partition=interactive --time=00:30:00 --ntasks=1 --cpus-per-task=4 --x11 # OR si --x11 [...]
 
 # Load the module abinit and needed environment
 $ module purge
@@ -54,7 +54,7 @@ module purge
 module load swenv/default-env/devel # Eventually (only relevant on 2019a software environment) 
 module load chem/ABINIT/8.10.2-intel-2019a
 
-srun -n ${SLURM_NTASKS} abinit < input.files &> out
+srun -ntasks=${SLURM_NTASKS} abinit < input.files &> out
 ```
 ## Additional information
 To know more information about ABINIT tutorial and documentation,
