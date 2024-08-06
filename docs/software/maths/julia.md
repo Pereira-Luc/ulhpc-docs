@@ -17,7 +17,7 @@ To open an MATLAB in the interactive mode, please follow the following steps:
 $ ssh -X iris-cluster
 
 # Reserve the node for interactive computation
-$ salloc -p interactive --time=00:30:00 --ntasks 1 -c 4 # OR si [...]
+$ salloc --partition=interactive --time=00:30:00 --ntasks=1 --cpus-per-task=4 # OR si [...]
 
 # Load the module Julia and needed environment
 $ module purge
@@ -32,12 +32,12 @@ $ julia
 
 ```bash
 #!/bin/bash -l
-#SBATCH -J Julia
-###SBATCH -A <project name>
-#SBATCH --ntasks-per-node 1
-#SBATCH -c 1
+#SBATCH --job-name=Julia
+###SBATCH --account=<project name>
+#SBATCH --ntasks-per-node=1
+#SBATCH -cpus-per-task=1
 #SBATCH --time=00:15:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 # Load the module Julia and needed environment
 module purge
@@ -52,19 +52,19 @@ julia {example}.jl
 
 ```bash
 #!/bin/bash -l
-#SBATCH -J Julia
-###SBATCH -A <project name>
-#SBATCH -N 1
-#SBATCH --ntasks-per-node 28
+#SBATCH --job-name=Julia
+###SBATCH --account=<project name>
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=28
 #SBATCH --time=00:10:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 # Load the module Julia and needed environment
 module purge
 module load swenv/default-env/devel # Eventually (only relevant on 2019a software environment) 
 module load lang/Julia/1.3.0
 
-srun -n ${SLURM_NTASKS} julia {example}.jl
+srun --ntasks ${SLURM_NTASKS} julia {example}.jl
 ```
 
 !!! example
