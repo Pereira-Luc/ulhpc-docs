@@ -16,7 +16,7 @@ on your local path.
 $ ssh -X iris-cluster    # OR ssh -Y iris-cluster on Mac
 
 # Reserve the node for interactive computation with grahics view (plots)
-$ si --x11 --ntasks-per-node 1 -c 4
+$ si --x11 --ntasks-per-node=1 --cpus-per-task=4
 # salloc -p interactive --qos debug -C batch --x11 --ntasks-per-node 1 -c 4
 
 # Go to scratch directory 
@@ -58,7 +58,7 @@ has been installed.
 $ ssh -X iris-cluster      # or ssh -Y iris-cluster on Mac
 
 # Reserve the node for interactive computation with grahics view (plots)
-$ si --ntasks-per-node 1 -c 4 --x11
+$ si --ntasks-per-node=1 --cpus-per-task=4 --x11
 # salloc -p interactive --qos debug -C batch --x11 --ntasks-per-node 1 -c 4
 
 # Activate anaconda  
@@ -74,13 +74,13 @@ $ python3 Poisson.py
 ### Batch script
 ```bash
 #!/bin/bash -l                                                                                                 
-#SBATCH -J FEniCS                                                                                        
-#SBATCH -N 1
-###SBATCH -A <project name>
+#SBATCH --job-name=FEniCS                                                                                        
+#SBATCH --nodes=1
+###SBATCH --account=<project name>
 ###SBATCH --ntasks-per-node=1
-#SBATCH -c 1
+#SBATCH --cpus-per-task=1
 #SBATCH --time=00:05:00                                                                      
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 echo "== Starting run at $(date)"                                                                                             
 echo "== Job ID: ${SLURM_JOBID}"                                                                                            
