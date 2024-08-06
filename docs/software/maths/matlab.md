@@ -31,7 +31,7 @@ To open MATLAB in the interactive mode, please follow the following steps:
 Then you can reserve an [interactive job](../../jobs/interactive.md), for instance with 4 cores. **Don't forget to use the `--x11` option if you intend to use the GUI**.
 
 ```bash
-$ si --x11 -c4
+$ si --x11 --cpus-per-task=4
 
 # Load the module MATLAB and needed environment
 (node)$ module purge
@@ -81,19 +81,19 @@ You have two ways to proceed:
 
 ```bash
 #!/bin/bash -l
-#SBATCH -J MATLAB
+#SBATCH --job-name=MATLAB
 ###SBATCH -A <project_name>
-#SBATCH --ntasks-per-node 1
-#SBATCH -c 1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
 #SBATCH --time=00:30:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 # Load the module MATLAB
 module purge
 module load math/MATLAB
 
 # second form with CLI options '-r <input>' and '-logfile <output>.out'
-srun -c $SLURM_CPUS_PER_TASK matlab -nodisplay -r my_matlab_script -logfile output.out
+srun --cpus-per-task=$SLURM_CPUS_PER_TASK matlab -nodisplay -r my_matlab_script -logfile output.out
 
 # example for if you need to have a input parameters for the computations
 # matlab_script_serial_file(x,y,z)
