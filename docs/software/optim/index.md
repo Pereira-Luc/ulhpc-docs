@@ -50,11 +50,11 @@ In order to solve mathematical programs, cplex allows users to define a command 
 
 ```slurm
 #!/bin/bash -l
-#SBATCH -J Multi-threaded_cplex
+#SBATCH --job-name=Multi-threaded_cplex
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=28
 #SBATCH --time=0-01:00:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 #SBATCH --qos=normal
 
 # Load cplex 
@@ -96,12 +96,12 @@ The below launcher is an example showing how to reserve ressources on multiple n
 
 ```slurm
 #!/bin/bash -l
-#SBATCH -J Distrbuted\_cplex
+#SBATCH --job-name=Distrbuted\_cplex
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=14
-#SBATCH -c 2    # multithreading -- #threads (slurm cpu) per task 
+#SBATCH --cpus-per-task=2    # multithreading -- #threads (slurm cpu) per task 
 #SBATCH --time=0-01:00:00
-#SBATCH -p batch
+#SBATCH -partition=batch
 #SBATCH --qos=normal
 module load math/CPLEX
 
@@ -140,11 +140,11 @@ The script below allows you to start multi-threaded MIP optimization with Gurobi
 
 ```slurm
 #!/bin/bash -l
-#SBATCH -J Multi-threaded_gurobi
+#SBATCH --job-name=Multi-threaded_gurobi
 #SBATCH --ntasks-per-node=1
-#SBATCH -c 28     # multithreading -- #threads (slurm cpu) per task 
+#SBATCH --cpus-per-task=28     # multithreading -- #threads (slurm cpu) per task 
 #SBATCH --time=0-01:00:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 #SBATCH --qos=normal
 
 # Load Gurobi 
@@ -166,14 +166,14 @@ Using the script ```gurobi_mtt.slurm ```, you can launch a batch job with the ``
 
 ```slurm
 #!/bin/bash -l
-#SBATCH -J Distrbuted_gurobi
-#SBATCH -N 3       # Number of nodes
+#SBATCH --job-name=Distrbuted_gurobi
+#SBATCH --nodes=3       # Number of nodes
 #SBATCH --ntasks-per-node=1
-#SBATCH -c 5   # multithreading -- #threads (slurm cpu) per task 
+#SBATCH --cpus-per-task=5   # multithreading -- #threads (slurm cpu) per task 
 #SBATCH --time=00:15:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 #SBATCH --qos normal
-#SBATCH -o %x-%j.log
+#SBATCH --output=%x-%j.log
 
 # Load personal modules
 mu
