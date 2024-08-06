@@ -82,7 +82,7 @@ You have two ways to proceed:
 ```bash
 #!/bin/bash -l
 #SBATCH --job-name=MATLAB
-###SBATCH -A <project_name>
+###SBATCH --account=<project_name>
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
 #SBATCH --time=00:30:00
