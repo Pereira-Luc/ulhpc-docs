@@ -22,7 +22,7 @@ To run an OpenFOAM in the interactive mode, please follow the following steps:
 $ ssh -X iris-cluster
 
 # Reserve the node for interactive computation
-$ salloc -p batch --time=00:30:00 --ntasks 1 -c 4 --x11
+$ salloc --partition=batch --time=00:30:00 --ntasks=1 --cpus-per-task=4 --x11
 
 # Load the required version of OpenFOAM and Intel environment
 $ module load swenv/default-env/v1.1-20180716-production
@@ -63,16 +63,16 @@ repartition the mesh domain.
 
 ```bash
 #!/bin/bash -l
-#SBATCH -J OpenFOAM
-#SBATCH -N 1
+#SBATCH --job-name=OpenFOAM
+#SBATCH --nodes=1
 #SBATCH --ntasks-per-node=28
 #SBATCH --ntasks-per-socket=14
-#SBATCH -c 1
+#SBATCH --cpus-per-task=1
 #SBATCH --time=00:30:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 # Write out the stdout+stderr in a file
-#SBATCH -o output.txt
+#SBATCH --output=output.txt
 
 # Mail me on job start & end
 #SBATCH --mail-user=myemailaddress@universityname.domain
