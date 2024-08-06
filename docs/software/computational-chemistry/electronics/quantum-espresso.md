@@ -34,7 +34,7 @@ To open an Quantum ESPRESSO in the interactive mode, please follow the following
 $ ssh -X iris-cluster
 
 # Reserve the node for interactive computation
-$ salloc -p interactive --time=00:30:00 --ntasks 1 -c 4 --x11  # OR si --x11 [...]
+$ salloc --partition=interactive --time=00:30:00 --ntasks=1 -cpus-per-task=4 --x11  # OR si --x11 [...]
 
 # Load the module quantumespresso and needed environment 
 $ module purge
@@ -47,20 +47,20 @@ $ pw.x -input example.in
 ## Batch mode
 ```bash
 #!/bin/bash -l
-#SBATCH -J QuantumESPRESSO
-#SBATCH -N 2
-#SBATCH -A <project name>
+#SBATCH --job-name=QuantumESPRESSO
+#SBATCH --nodes=2
+#SBATCH --account=<project name>
 #SBATCH -M --cluster iris 
 #SBATCH --ntasks-per-node=28
 #SBATCH --time=00:30:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 # Load the module quantumespresso and needed environment 
 module purge
 module load swenv/default-env/devel # Eventually (only relevant on 2019a software environment) 
 module load chem/QuantumESPRESSO/6.4.1-intel-2019a
 
-srun -n ${SLURM_NTASKS} pw.x -input example.inp
+srun --ntasks=${SLURM_NTASKS} pw.x -input example.inp
 ```
 
 ## Additional information
