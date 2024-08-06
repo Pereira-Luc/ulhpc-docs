@@ -27,7 +27,7 @@ To open CP2K in the interactive mode, please follow the following steps:
 $ ssh -X iris-cluster
 
 # Reserve the node for interactive computation
-$ salloc -p interactive --time=00:30:00 --ntasks 1 -c 4 --x11 # OR si --x11 [...]
+$ salloc --partition=interactive --time=00:30:00 --ntasks 1 --cpus-per-task=4 --x11 # OR si --x11 [...]
 
 # Load the module cp2k and needed environment 
 $ module purge
@@ -40,13 +40,13 @@ $ cp2k.popt -i example.inp
 ## Batch mode
 ```bash
 #!/bin/bash -l
-#SBATCH -J CP2K
-#SBATCH -N 2
-#SBATCH -A <project name>
+#SBATCH --job-name=CP2K
+#SBATCH --nodes=2
+#SBATCH --account=<project name>
 #SBATCH -M --cluster iris 
 #SBATCH --ntasks-per-node=28
 #SBATCH --time=00:30:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 # Load the module cp2k and needed environment 
 module purge
