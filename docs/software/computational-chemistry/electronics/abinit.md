@@ -41,13 +41,13 @@ $ abinit < example.in
 ## Batch mode
 ```shell
 #!/bin/bash -l
-#SBATCH -J ABINIT
-#SBATCH -A <project name>
+#SBATCH --job-name=ABINIT
+#SBATCH --account=<project name>
 #SBATCH -M --cluster iris 
-#SBATCH -N 2
+#SBATCH --nodes 2
 #SBATCH --ntasks-per-node=28
 #SBATCH --time=00:30:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 # Load the module abinit and needed environment
 module purge
