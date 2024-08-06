@@ -26,7 +26,7 @@ To open NAMD in the interactive mode, please follow the following steps:
 $ ssh -X iris-cluster
 
 # Reserve the node for interactive computation
-$ salloc -p interactive --time=00:30:00 --ntasks 1 -c 4 --x11 # OR si --x11 [...]
+$ salloc --partition=interactive --time=00:30:00 --ntasks=1 --cpus-per-task=4 --x11 # OR si --x11 [...]
 
 # Load the module namd and needed environment 
 $ module purge
@@ -39,20 +39,20 @@ $ namd2 +setcpuaffinity +p4 config_file > output_file
 ## Batch mode
 ```bash
 #!/bin/bash -l
-#SBATCH -J NAMD
-#SBATCH -N 2
-#SBATCH -A <project name>
+#SBATCH --job-name=NAMD
+#SBATCH --nodes=2
+#SBATCH --account=<project name>
 #SBATCH -M --cluster iris 
 #SBATCH --ntasks-per-node=28
 #SBATCH --time=00:30:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 # Load the module namd and needed environment 
 module purge
 module load swenv/default-env/devel # Eventually (only relevant on 2019a software environment) 
 module load chem/NAMD/2.12-intel-2018a-mpi
 
-srun -n ${SLURM_NTASKS} namd2 +setcpuaffinity +p56 config_file.namd > output_file
+srun --ntasks=${SLURM_NTASKS} namd2 +setcpuaffinity +p56 config_file.namd > output_file
 ```
 ## Additional information
 To know more information about NAMD tutorial and documentation,
