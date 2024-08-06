@@ -34,16 +34,16 @@ $ fds example.fds
 ### MPI only:
 ```shell
 #!/bin/bash -l
-#SBATCH -J FDS-mpi
-#SBATCH -N 2
+#SBATCH --job-name=FDS-mpi
+#SBATCH --nodes=2
 #SBATCH --ntasks-per-node=28
 #SBATCH --ntasks-per-socket=14
-#SBATCH -c 1
+#SBATCH --cpus-per-task=1
 #SBATCH --time=00:30:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 # Write out the stdout+stderr in a file
-#SBATCH -o output.txt
+#SBATCH --output=output.txt
 
 # Mail me on job start & end
 #SBATCH --mail-user=myemailaddress@universityname.domain
@@ -66,15 +66,15 @@ srun fds example.fds
 ### MPI+OpenMP (hybrid):
 ```shell
 #!/bin/bash -l
-#SBATCH -J FDS-hybrid
-#SBATCH -N 2
+#SBATCH --job-name=FDS-hybrid
+#SBATCH --nodes=2
 #SBATCH --ntasks-per-node=56
 #SBATCH --cpus-per-task=2
 #SBATCH --time=00:30:00
-#SBATCH -p batch
+#SBATCH --partition=batch
 
 # Write out the stdout+stderr in a file
-#SBATCH -o output.txt
+#SBATCH --output=output.txt
 
 # Mail me on job start & end
 #SBATCH --mail-user=myemailaddress@universityname.domain
