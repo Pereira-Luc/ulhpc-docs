@@ -83,9 +83,9 @@ To open an Abaqus in the interactive mode, please follow the following steps:
 Then you can reserve an [interactive job](../../jobs/interactive.md), for instance with 8 MPI processes. **Don't forget to use the `--x11` option if you intend to use the GUI**.
 
 ```bash
-$ si --x11 -c 8               # Abaqus mp_mode=threads test
+$ si --x11 --cpus-per-task=8               # Abaqus mp_mode=threads test
 # OR
-$ si --x11 --ntask-per-node 8 # abaqus mp_mode=mpi test
+$ si --x11 --ntask-per-node=8 # abaqus mp_mode=mpi test
 
 # Load the module ABAQUS and needed environment
 (node)$ module purge
@@ -108,7 +108,7 @@ Flexible License Manager status on Wed 4/13/2022 22:39
 Then the general format to run your Non-Graphical multithreaded interactive execution:
 
 === "Shared Memory (`-c <threads>`)"
-    Assuming a job submitted with `{sbatch|srun|si...} -N1 -c <threads>`:
+    Assuming a job submitted with `{sbatch|srun|si...} --nodes=1 --cpus-per-task=<threads>`:
     ```bash
     # /!\ ADAPT $INPUTFILE accordingly
     abaqus job="${SLURM_JOB_NAME}" verbose=2 interactive \
@@ -117,7 +117,7 @@ Then the general format to run your Non-Graphical multithreaded interactive exec
     ```
 
 === "Distributed Memory (MPI)"
-    Assuming a job submitted with `{sbatch|srun|si...} -N <N> --ntasks-per-node <npn> -c 1`:
+    Assuming a job submitted with `{sbatch|srun|si...} --nodes=<num_nodes> --ntasks-per-node=<npn> --cpus-per-task=1`:
     ```bash
     # /!\ ADAPT $INPUTFILE accordingly
     abaqus job="${SLURM_JOB_NAME}" verbose=2 interactive \
@@ -149,12 +149,12 @@ abaqus job=<jobname> resume
 === "Shared memory (mp_mode=threads)"
     ```bash
     #!/bin/bash -l                # <--- DO NOT FORGET '-l'
-    #SBATCH -J <jobname>
-    #SBATCH -N 1
+    #SBATCH --job-name=<jobname>
+    #SBATCH --nodes=1
     #SBATCH --ntasks-per-node=1
-    #SBATCH -c 4                  # /!\ ADAPT accordingly
+    #SBATCH --cpus-per-task=4                  # /!\ ADAPT accordingly
     #SBATCH --time=0-03:00:00
-    #SBATCH -p batch
+    #SBATCH --partition=batch
 
     print_error_and_exit() { echo "***ERROR*** $*"; exit 1; }
     module purge || print_error_and_exit "No 'module' command"
@@ -172,12 +172,12 @@ abaqus job=<jobname> resume
 === "Distributed memory (mp_mode=mpi)"
     ```bash
     #!/bin/bash -l                # <--- DO NOT FORGET '-l'
-    #SBATCH -J <jobname>
-    #SBATCH -N 2
+    #SBATCH --job-name=<jobname>
+    #SBATCH --nodes=2
     #SBATCH --ntasks-per-node=8  # /!\ ADAPT accordingly
-    #SBATCH -c 1
+    #SBATCH --cpus-per-task=1
     #SBATCH --time=0-03:00:00
-    #SBATCH -p batch
+    #SBATCH --partition=batch
 
     print_error_and_exit() { echo "***ERROR*** $*"; exit 1; }
     module purge || print_error_and_exit "No 'module' command"
@@ -196,13 +196,13 @@ abaqus job=<jobname> resume
     **May not be supported depending on the software set**
     ```bash
     #!/bin/bash -l                # <--- DO NOT FORGET '-l'
-    #SBATCH -J <jobname>
-    #SBATCH -N 1
+    #SBATCH --job-name=<jobname>
+    #SBATCH --nodes=1
     #SBATCH --ntasks-per-node=1
-    #SBATCH -c 7
-    #SBATCH -G 1
+    #SBATCH --cpus-per-task=7
+    #SBATCH --gpus=1
     #SBATCH --time=0-03:00:00
-    #SBATCH -p gpu
+    #SBATCH --partition=gpu
 
     print_error_and_exit() { echo "***ERROR*** $*"; exit 1; }
     module purge || print_error_and_exit "No 'module' command"
