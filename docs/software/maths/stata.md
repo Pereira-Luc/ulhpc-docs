@@ -42,7 +42,7 @@ To open a Stata session in [interactive](../../jobs/interactive.md) mode, please
 Then you can reserve an [interactive job](../../jobs/interactive.md), for instance with 2 cores. **Don't forget to use the `--x11` option if you intend to use the GUI**.
 
 ```bash
-$ si --x11 -c2      # You CANNOT use more than 2 cores
+$ si --x11 --cpus-per-task=2      # You CANNOT use more than 2 cores
 
 # Load the module Stata and needed environment
 (node)$ module purge
@@ -103,12 +103,12 @@ With the `-b` flag, outputs will be automatically saved to the outputfile `filen
 === "Serial Stata"
     ```bash
     #!/bin/bash -l
-    #SBATCH -J Stata
-    ###SBATCH -A <project_name>
-    #SBATCH --ntasks-per-node 1
-    #SBATCH -c 1
+    #SBATCH --job-name=Stata
+    ###SBATCH --account=<project_name>
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --cpus-per-task=1
     #SBATCH --time=00:30:00
-    #SBATCH -p batch
+    #SBATCH --partition=batch
 
     # Load the module Stata
     module purge
@@ -120,19 +120,19 @@ With the `-b` flag, outputs will be automatically saved to the outputfile `filen
 === "Parallel Stata (Stata/MP)"
     ```bash
     #!/bin/bash -l
-    #SBATCH -J Stata
-    ###SBATCH -A <project_name>
+    #SBATCH --job-name=Stata
+    ###SBATCH --account=<project_name>
     #SBATCH --ntasks-per-node 1
-    #SBATCH -c 2
+    #SBATCH --cpus-per-task=2
     #SBATCH --time=00:30:00
-    #SBATCH -p batch
+    #SBATCH --partition=batch
 
     # Load the module Stata
     module purge
     module load math/Stata
 
     # Use stata-mp to run across multiple cores
-    srun -c $SLURM_CPUS_PER_TASK stata-mp -b do INPUTFILE.do
+    srun --cpus-per-task=$SLURM_CPUS_PER_TASK stata-mp -b do INPUTFILE.do
     ```
 
 
@@ -147,7 +147,7 @@ Note however that **the current license limits the maximum number of cores (to 2
 Example of interactive usage:
 
 ```bash
-$ si --x11 -c2      # You CANNOT use more than 2 cores
+$ si --x11 --cpus-per-task=2      # You CANNOT use more than 2 cores
 
 # Load the module Stata and needed environment
 (node)$ module purge
