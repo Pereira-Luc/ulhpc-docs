@@ -31,7 +31,7 @@ cae/gmsh/4.4.0-intel-2019a
 $ ssh -X iris-cluster
 
 # Reserve the node for interactive computation
-$ salloc -p interactive --time=00:30:00 --ntasks 1 -c 4 --x11
+$ salloc --partition=interactive --time=00:30:00 --ntasks=1 --cpus-per-task=4 --x11
 
 # Load the module for Gmesh and neeed environment
 $ module purge
@@ -66,7 +66,7 @@ cae/Salome/8.5.0-intel-2019a
 $ ssh -X iris-cluster
 
 # Reserve the node for interactive computation
-$ srun -p batch --time=00:30:00 --ntasks 1 -c 4 --x11 --pty bash -i
+$ srun --partition=batch --time=00:30:00 --ntasks=1 -cpus-per-task=4 --x11 --pty bash -i
 
 # Load the module Salome and needed environment
 $ module purge
